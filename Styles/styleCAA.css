@@ -1,0 +1,26 @@
+﻿
+
+/*表格中工具面板样式*/  
+div#toolspanelMAS
+{
+    width:inherit;
+    height:inherit;
+    border:0px;
+    padding-left:10px;
+    font-family:Microsoft YaHei;
+    font-size:13px;
+    vertical-align:top;
+    }
+#dialogboxMAS
+{
+    border:1px solid #c4e9ea;
+    padding:0px;
+    }
+ /*降雨量查询对话框样式*/
+ 
+ .rowTitle
+ {
+ 	  font-weight:bold;
+ 	}
+
+

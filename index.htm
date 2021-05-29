@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>水利信息在线分析服务系统</title>
+    <link href="Libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/style.css" rel="stylesheet" type="text/css" />
+    <!-- jQuery库 -->
+    <script src="Libs/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <!--OL3库-->
+<!--    <script src="Libs/ol/ol.js" type="text/javascript"></script>-->
+    <script src="Libs/ol/ol-debug.js" type="text/javascript"></script>
+    <link href="Libs/ol/ol.css" rel="stylesheet" type="text/css" />
+    <!--OL3扩展库-->
+    <script src="Libs/ol/source/GoogleMapSource.js" type="text/javascript"></script>
+    <script src="Libs/ol/layer/GoogleMapLayer.js" type="text/javascript"></script>
+   <!-- 第三方插件库 统计图插件 -->
+    <script src="Libs/FusionCharts.js" type="text/javascript"></script>
+    <!-- 第三方插件库 -->
+    <script src="Libs/jquery-ui-1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Libs/jquery.ui.datepicker-zh-CN.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="backgroundDiv">
+    </div>
+    <!-- 地图底图切换列表 -->
+    <select class="layerSwitcherDiv" id="layerSwitcherBtn" onchange="onlayerSwitcherBtn()">
+        <option value="terrain">谷歌地形图</option>
+        <option value="vector">谷歌矢量图</option>
+        <option value="raster">谷歌遥感图</option>
+        <option value="road">谷歌交通图</option>
+    </select>
+    <div class="logoImg"></div>
+    <!-- 功能模块面板 start -->
+    <div class="containerBack" id="coverLayer"></div>
+    <div class="applyImg" id="imgApply" onclick="showApplyContainer()">
+        综合应用
+    </div>
+    <div class="closeDiv">
+        <div class="closeImg" id="closeFun" onclick="hideApplyContainer()">
+        </div>
+    </div>
+    <div class="applyContainer" id="comApply">
+        <ul>
+        	<li><input class="applyInput" type="checkbox" id="sssq" onchange="sssqStateChange()" /><label for="sssq">实时水情</label></li>
+        	<li><input class="applyInput" type="checkbox" id="ssyq" onchange="ssyqStateChanhe()" /><label for="ssyq">实时雨情</label></li>
+        	<li><input class="applyInput" type="checkbox" id="tflj" onchange="tfljStateChange()" /><label for="tflj">台风路径</label></li>
+        	<li><input class="applyInput" type="checkbox" id="wxyt" onchange="wxytStateChange()" /><label for="wxyt">卫星云图</label></li>
+        </ul>
+    </div>
+    <!-- 功能模块面板 end -->
+    <!-- 地图容器-->
+    <div id="map">
+        <!-- Popup -->
+        <div id="popup" class="ol-popup" >
+              <div id="popup-closer" class="ol-popup-closer"></div>
+              <div id="popup-content">              
+              </div>
+        </div>
+    </div>
+    <!-- 功能结果展示 -->
+    <div class="LabelList">
+        <ul id="labelUL"></ul>
+    </div>
+    <!-- 实时水情start -->
+    <div class="sqDiv">
+        <div class="sqTop">
+            <div class="sqHeader">
+                条件选择</div>
+            <div class="sqContent">
+                <input class="sqCheckBox" id="RverInfo" type="checkbox" onchange="showWaterInfo('Rver')" />水库
+                <input class="sqCheckBox" id="riverInfo" type="checkbox" checked="checked" onchange="showWaterInfo('river')" />河流
+            </div>
+        </div>
+        <div class="sqMain">
+            <div class="skxx">
+                <div class="sqHeader" onclick="showSssqTab('Rver')">
+                    水库信息(单位：m)</div>
+                <div class="hlxxContent" id="skxxTab">
+                </div>
+            </div>
+            <div class="hlxx">
+                <div class="sqHeader" onclick="showSssqTab('river')">
+                    河流信息(单位：m)
+                </div>
+                <div class="hlxxContent" id="hlxxTab">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sqSplitDiv" id="sqSplitBtn"></div>
+    <!-- 实时水情end -->
+    <!-- 实时雨情statr -->
+    <div class="ssyqDiv" id="ssyqFun">
+        <div class="yqTop">
+            <div class="sqHeader">
+                条件选择</div>
+            <div class="yqTopTime">
+                &nbsp&nbsp 从<input id="ssyqfrom1" name="from" type="text" value="2008-05-16 " />
+                <select id="fromTime">
+                </select><br />
+                <br />
+                &nbsp&nbsp 到<input id="ssyqfrom2" name="from" type="text" value="2008-05-16 " />
+                <select id="toTime">
+                </select>
+            </div>
+        </div>
+        <div class="yqCnter">
+            <div class="sqHeader">
+                雨量范围（单位：mm）</div>
+            <div class="yqContent">
+                <ul>
+                    <li style="background: url('Libs/images/shishiyuqing/yq00.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="0" onchange="onRainStateChange()" />0</li>
+                    <li style="background: url('Libs/images/shishiyuqing/yq01.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="10" onchange="onRainStateChange()" />10</li>
+                    <li style="background: url('Libs/images/shishiyuqing/yq02.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="25" onchange="onRainStateChange()" />25</li>
+                    <li style="background: url('Libs/images/shishiyuqing/yq03.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="50" onchange="onRainStateChange()" />50</li>
+                    <li style="background: url('Libs/images/shishiyuqing/yq04.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="100" onchange="onRainStateChange()"
+                            checked="true" />100</li>
+                    <li style="background: url('Libs/images/shishiyuqing/yq05.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="250" onchange="onRainStateChange()" />250</li>
+                    <li style="background: url('Libs/images/shishiyuqing/yq06.png') no-repeat;">
+                        <input class="ylxxCheckbox" type="checkbox" value="260" onchange="onRainStateChange()" />250以上</li>
+                </ul>
+            </div>
+        </div>
+        <div class="yqBottom">
+            <div id="ylxx">
+                <div class="yqHeader" onclick="showSsyqTab('ylxx')">
+                    雨量信息(单位：mm)</div>
+                <div class="ylxxContent" id="ylxxTab" style="display: block">
+                </div>
+            </div>
+            <div id="gszdyl">
+                <div class="yqHeader" onclick="showSsyqTab('gszdyl')">
+                    各市最大雨量</div>
+                <div class="ylxxContent" id="gszdylTab">
+                </div>
+            </div>
+            <div id="ljtj">
+                <div class="yqHeader" onclick="showSsyqTab('ljtj')">
+                    量级统计</div>
+                <div class="ylxxContent" id="ljtjTab">
+                    <table id="ljtjTable">
+                        <tr class='ssyqTrInfo c'>
+                            <th>
+                                雨量范围（单位：mm）
+                            </th>
+                            <th>
+                                区县数
+                            </th>
+                        </tr>
+                        <tr class='ssyqTrInfo c'>
+                            <td>
+                                0.1-9.9
+                            </td>
+                            <td id="tr0">
+                                0
+                            </td>
+                        </tr>
+                        <tr class='ssyqTrInfo c'>
+                            <td>
+                                10-24.0
+                            </td>
+                            <td id="tr1">
+                                0
+                            </td>
+                        </tr>
+                        <tr class='ssyqTrInfo c'>
+                            <td>
+                                25-49.9
+                            </td>
+                            <td id="tr2">
+                                0
+                            </td>
+                        </tr>
+                        <tr class='ssyqTrInfo c'>
+                            <td>
+                                50-99.9
+                            </td>
+                            <td id="tr3">
+                                0
+                            </td>
+                        </tr>
+                        <tr class='ssyqTrInfo c'>
+                            <td>
+                                100-249.9
+                            </td>
+                            <td id="tr4">
+                                0
+                            </td>
+                        </tr>
+                        <tr class='ssyqTrInfo c'>
+                            <td>
+                                250以上
+                            </td>
+                            <td id="tr5">
+                                0
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 实时雨情end -->
+    <!-- 台风路径start -->
+    <div class="tfDiv">
+        <div class="tuliCoverLayer" id="tuliCoverLayer"></div>
+        <div class="tuliDiv">            
+            <div class="tuliHeader" onclick="showTFContainer()">
+                台风图例
+            </div>
+            <div class="closeDivTF">
+                <div class="closeImgTF" id="closeFunTF" onclick="hideTFContainer()">
+                </div>
+            </div>
+            <div class="tuliContent">
+                <ul>
+                    <li style="background: url('Libs/images/taifeng/Wind01.png') no-repeat;">超强台风</li>
+                    <li style="background: url('Libs/images/taifeng/Wind03.png') no-repeat;">强台风</li>
+                    <li style="background: url('Libs/images/taifeng/Wind02.png') no-repeat;">台风</li>
+                    <li style="background: url('Libs/images/taifeng/Wind04.png') no-repeat;">强热带风暴</li>
+                    <li style="background: url('Libs/images/taifeng/Wind05.png') no-repeat;">热带风暴</li>
+                    <li style="background: url('Libs/images/taifeng/Wind06.png') no-repeat;">热带气压</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tfRightDiv">
+            <div class="choiceDiv">
+                <div class="tfHeader">
+                    条件选择
+                </div>
+                <div class="tftjxzContent" id="tftjxzTab">
+                </div>
+            </div>
+            <div class="resDiv">
+                <div class="tfHeader">
+                    台风路径
+                </div>
+                <div class="tfljContent" id="tfljTab">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 台风路径end -->
+    <!-- 卫星云图start -->
+    <div id="dialog" title="卫星云图">
+        <iframe id="wxytIframe"></iframe>
+    </div>
+    <!-- 卫星云图end -->
+    <!-- 系统功能库 -->
+    <script src="Scripts/SLSysFun.js" type="text/javascript"></script>
+</body>
+</html>

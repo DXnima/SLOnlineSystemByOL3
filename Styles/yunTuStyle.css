@@ -1,0 +1,104 @@
+﻿/*************************************页面初始配置start***********************************/
+body
+{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-size:14px;
+    font-family:"微软雅黑"; 
+}
+
+#title
+{
+    font-size: 22px;
+    font-family: Times New Roman;
+    color: rgb(10,36,106); /*rgb(10,36,106)*/
+    font-weight: bold;
+    display: block;
+}
+
+.main
+{
+    width: 900px;
+    height: 530px;
+}
+.mainLeft
+{
+    height: 530px;
+    position: absolute;
+    border: 1px solid black;
+    width: 180px;
+}
+
+.mainRight
+{
+    height: 530px;
+    width: 720px;
+    position: absolute;
+    border: 1px solid black;
+    left: 180px;
+}
+
+.timeDiv
+{
+    position: absolute;
+    top: 5px;
+    height: 40px;
+    width: 100%;
+    padding:10px 5px;
+}
+
+.functionButton
+{
+    position: absolute;
+    top: 50px;
+}
+
+.functionButton input
+{
+    width: 70px;
+    margin:5px 8px;
+}
+
+.selectImg
+{
+    position: absolute;
+    top: 90px;
+    height: 440px;
+    border: gray 1px solid;
+    width: 178px;
+    overflow: auto;
+}
+.selectImg ul
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.selectImg ul li
+{
+    list-style-type: none;
+    font-size: 12px;
+    line-height: 20px;
+    text-indent:10px;
+}
+
+.yuntuMain
+{
+    background-repeat: no-repeat;
+    position: absolute;
+    background-size: cover;
+}
+
+.yuntuMain img
+{
+    height:530px;
+    width:720px;
+}
+
+.wxytLi.a{background-color:#7FCEFF;}
+.wxytLi.b{background-color:#B3E1FF;}
+.c{background-color:white;}

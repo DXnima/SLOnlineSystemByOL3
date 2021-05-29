@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>卫星云图</title>
+    <link href="Styles/yunTuStyle.css" rel="stylesheet" type="text/css" />
+    <script src="Libs/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="Libs/jqueryEasyui/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+    <link href="Libs/jqueryEasyui/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/yunTuFun.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="mainLeft">
+            <div class="timeDiv">
+                &nbsp&nbsp 动画延时:&nbsp&nbsp&nbsp&nbsp<input type="text" id="spinner2" value="1" style="width: 30px;" />
+            </div>
+            <div class="functionButton">
+                <input type="button" value="播放" onclick="startShowCloud()" />
+                <input type="button" value="停止" onclick="stopShowCloud()" />
+            </div>
+            <div class="selectImg" id="selectImgList">
+            </div>
+        </div>
+        <div class="mainRight">
+            <div class="yuntuMain" id="yuntuImg">
+                <img src="Libs/images/yuntu/201206180000.jpg">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
